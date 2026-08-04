@@ -1,6 +1,6 @@
 const express = require('express');
-const connectDB = require('./config/db') // Import DB Connection
 require('dotenv').config(); // Load Environment variables
+const connectDB = require('./config/db') // Import DB Connection
 
 // Initialize app
 const app = express();
