@@ -1,17 +1,17 @@
 const express = require('express');
 require('dotenv').config(); // Load Environment variables
-const connectDB = require('./config/db') // Import DB Connection
+const connectDB = require('./config/db'); // Import DB Connection
+const authRoutes = require('./routes/authRoutes');
 
 // Initialize app
 const app = express();
+app.use(express.json());
 
 // Connect to database
 connectDB();
 
 // Test Router
-app.get('/', (req, res) => {
-    res.send("Backend Server is running!");
-});
+app.use('/api/auth', authRoutes);
 
 // Define the port and start listening
 const PORT = process.env.PORT || 3000;
