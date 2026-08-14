@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { addProperty, getProperties } = require('../controllers/propertyController');
+const { addProperty, getProperties, deleteProperty } = require('../controllers/propertyController');
 const { protect } = require('../middleware/authMiddleware');
 
-// Route is guarded by 'protect' middleware
+// Define Routes
 router.post('/add', protect, addProperty); 
 router.get('/all', getProperties);
+router.delete('/:id', protect, deleteProperty); // Delete property
 
 module.exports = router;

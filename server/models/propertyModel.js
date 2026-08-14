@@ -10,7 +10,7 @@ const propertySchema = new mongoose.Schema({
         require: true
     },
     owner: {
-        type: mmongoose.Schema.type.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User', // This links the Property to a specific User (the Owner)
         require: true
     },

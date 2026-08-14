@@ -30,3 +30,20 @@ exports.getProperties = async (req, res) => {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
+
+// 3. Delete Property (Admin or Owner)
+exports.deleteProperty = async (req, res) => {
+    try {
+        const property = await Property.findById(req.params.id);
+        if (!property) return res.status(404).json({ message: "Property not found" });
+
+        if (property.owner.toString() !== req.user.id && req.user.role !== 'Admin' && req.user.role !== 'admin') {
+            return res.status(403).json({ message: "Not authorized to delete this property" });
+        }
+
+        await Property.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "Property deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+};

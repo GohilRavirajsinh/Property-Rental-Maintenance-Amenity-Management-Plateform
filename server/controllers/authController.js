@@ -24,7 +24,22 @@ exports.registerUser = async (req, res) => {
         });
         await newUser.save();
 
-        res.status(201).json({ message: "User registered successfully!" });
+        // Generate JWT Token so user is automatically logged in upon registration
+        const token = jwt.sign(
+            { id: newUser._id, role: newUser.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '3d' }
+        );
+
+        res.status(201).json({ 
+            message: "User registered successfully!",
+            token,
+            user: {
+                id: newUser._id,
+                name: newUser.name,
+                role: newUser.role
+            }
+        });
     } catch (error) {
         res.status(500).json({
             message: "Server Error", error: error.message
@@ -51,7 +66,7 @@ exports.loginUser = async (req, res) => {
         const token = jwt.sign(
             { id: user._id, role: user.role },
             process.env.JWT_SECRET,
-            { expiresIn: '1d' }
+            { expiresIn: '3d' }
         );
 
         res.status(200).json({
@@ -63,6 +78,34 @@ exports.loginUser = async (req, res) => {
                 role: user.role
             }
         });
+    } catch (error) {
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+};
+
+// Get All Users (Admin Only)
+exports.getAllUsers = async (req, res) => {
+    try {
+        if (req.user.role !== 'Admin' && req.user.role !== 'admin') {
+            return res.status(403).json({ message: "Access Denied. Admin only." });
+        }
+        
+        const users = await User.find().select('-password'); // Exclude passwords
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+};
+
+// Delete User (Admin Only)
+exports.deleteUser = async (req, res) => {
+    try {
+        if (req.user.role !== 'Admin' && req.user.role !== 'admin') {
+            return res.status(403).json({ message: "Access Denied. Admin only." });
+        }
+        
+        await User.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "User deleted successfully" });
     } catch (error) {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
