@@ -1,6 +1,28 @@
 # 🏢 Property Rental, Maintenance & Amenity Management Platform
 
-A full-stack role-based Web Application built with the **MERN (MongoDB, Express, React, Node.js)** stack. This platform bridges the gap between Property Owners, Tenants, and System Admins, providing a centralized hub for managing properties, booking amenities, and handling maintenance requests.
+A full-stack role-based Web Application built with the **MERN (MongoDB, Express, React, Node.js)** stack. This platform bridges the gap between Property Owners, Tenants, and System Admins by providing a centralized hub for managing properties, booking amenities, and handling maintenance requests.
+
+---
+
+## 📸 Screenshots
+
+1. **Login & Registration Page**
+   ![Login Page](./screenshots/Login.png.png)
+   ![Register Page](./screenshots/Register.png.png)
+
+2. **Tenant Dashboard**
+   ![Tenant Properties](./screenshots/Tenant%20Dashboard.png)
+   ![Amenity Booking](./screenshots/Tenant-Aminity-Booking.png)
+
+3. **Owner Dashboard**
+   ![Owner Dashboard](./screenshots/Owner-Dashboard.png)
+   ![Owner Amenity Handling](./screenshots/Owner-Aminity-Handling.png)
+
+4. **Master Admin Dashboard**
+   ![Admin Dashboard](./screenshots/Admin-Dashboard.png)
+
+5. **About Page**
+   ![About Page](./screenshots/About.png.png)
 
 ---
 
