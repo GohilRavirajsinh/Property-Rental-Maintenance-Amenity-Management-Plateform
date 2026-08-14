@@ -9,7 +9,7 @@ const MaintenanceList = () => {
     const fetchRequests = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/maintenance/all', {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/maintenance/all`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setRequests(response.data);

@@ -12,7 +12,7 @@ const MaintenanceForm = () => {
         // Fetch properties for the dropdown
         const fetchProperties = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/properties/all');
+                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/properties/all`);
                 setProperties(response.data);
                 if(response.data.length > 0) {
                     setSelectedProperty(response.data[0]._id);
@@ -33,7 +33,7 @@ const MaintenanceForm = () => {
             const token = localStorage.getItem('token');
             // 'propertyId' should match the backend expectation. 
             // In backend: const { propertyId, description } = req.body;
-            await axios.post('http://localhost:5000/api/maintenance/request', 
+            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/maintenance/request`, 
                 { propertyId: selectedProperty, description },
                 { headers: { Authorization: `Bearer ${token}` } } 
             );

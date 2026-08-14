@@ -9,7 +9,7 @@ const UserManagement = () => {
         const fetchUsers = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:5000/api/auth/users', {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/users`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setUsers(response.data);

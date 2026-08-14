@@ -8,7 +8,7 @@ const BookingList = () => {
     const fetchBookings = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/bookings/all', {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookings/all`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBookings(response.data);

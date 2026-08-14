@@ -12,7 +12,7 @@ const AddAmenityForm = () => {
         const fetchProperties = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:5000/api/properties/all', {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/properties/all`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setProperties(response.data);
@@ -35,7 +35,7 @@ const AddAmenityForm = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:5000/api/amenities/add', 
+            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/amenities/add`, 
                 { propertyId, name },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

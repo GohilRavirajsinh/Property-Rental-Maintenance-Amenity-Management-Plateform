@@ -30,7 +30,7 @@ const AddPropertyForm = () => {
             }
             
             // 3. Backend ko Request bhejna (sath me token bhi)
-            const response = await axios.post('http://localhost:5000/api/properties/add', 
+            const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/properties/add`, 
                 formData,
                 { 
                     headers: { 

@@ -17,7 +17,7 @@ const AmenityBooking = () => {
     const fetchBookings = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/bookings/all', {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookings/all`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBookings(response.data);
@@ -29,7 +29,7 @@ const AmenityBooking = () => {
     const fetchProperties = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/properties/all', {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/properties/all`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setProperties(response.data);
@@ -73,7 +73,7 @@ const AmenityBooking = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:5000/api/bookings/book', 
+            await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookings/book`, 
                 { propertyId, amenity, bookingDate, startTime, endTime },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
