@@ -6,6 +6,7 @@ import MaintenanceForm from '../components/MaintenanceForm'
 import MaintenanceList from '../components/MaintenanceList'
 import AmenityBooking from '../components/AmenityBooking'
 import AddAmenityForm from '../components/AddAmenityForm'
+import ManageAmenities from '../components/ManageAmenities'
 import UserManagement from '../components/UserManagement'
 import BookingList from '../components/BookingList'
 
@@ -95,26 +96,26 @@ const Dashboard = () => {
                                 className={`font-bold px-4 py-2 rounded-t-lg transition ${activeTenantTab === 'properties' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
                             >Available Properties</button>
                             <button 
-                                onClick={() => setActiveTenantTab('maintenance')}
-                                className={`font-bold px-4 py-2 rounded-t-lg transition ${activeTenantTab === 'maintenance' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
-                            >Maintenance / Complaints</button>
-                            <button 
                                 onClick={() => setActiveTenantTab('booking')}
                                 className={`font-bold px-4 py-2 rounded-t-lg transition ${activeTenantTab === 'booking' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
                             >Amenity Booking</button>
+                            <button 
+                                onClick={() => setActiveTenantTab('maintenance')}
+                                className={`font-bold px-4 py-2 rounded-t-lg transition ${activeTenantTab === 'maintenance' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >Maintenance / Complaints</button>
                         </div>
 
                         {/* Tab Content */}
                         {activeTenantTab === 'properties' && <PropertyList />}
                         
+                        {activeTenantTab === 'booking' && <AmenityBooking />}
+
                         {activeTenantTab === 'maintenance' && (
                             <div className="pt-2">
                                 <MaintenanceForm />
                                 <MaintenanceList />
                             </div>
                         )}
-
-                        {activeTenantTab === 'booking' && <AmenityBooking />}
                     </div>
 
                 )}
@@ -126,6 +127,10 @@ const Dashboard = () => {
 
                         {/* Owner Navigation Tabs */}
                         <div className="flex space-x-4 border-b border-gray-200 mb-6 pb-2 overflow-x-auto">
+                            <button 
+                                onClick={() => setActiveOwnerTab('manage_assets')}
+                                className={`font-bold px-4 py-2 rounded-t-lg transition ${activeOwnerTab === 'manage_assets' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+                            >Manage My Assets</button>
                             <button 
                                 onClick={() => setActiveOwnerTab('add_property')}
                                 className={`font-bold px-4 py-2 rounded-t-lg transition ${activeOwnerTab === 'add_property' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
@@ -145,6 +150,13 @@ const Dashboard = () => {
                         </div>
 
                         {/* Tab Content */}
+                        {activeOwnerTab === 'manage_assets' && (
+                            <div className="pt-2">
+                                <h3 className="text-2xl font-bold text-indigo-900 mb-4">My Properties</h3>
+                                <PropertyList />
+                                <ManageAmenities />
+                            </div>
+                        )}
                         {activeOwnerTab === 'add_property' && <AddPropertyForm />}
                         {activeOwnerTab === 'add_amenity' && <div className="pt-2"><AddAmenityForm /></div>}
                         

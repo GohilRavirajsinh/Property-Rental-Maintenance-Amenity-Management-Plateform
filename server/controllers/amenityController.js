@@ -44,3 +44,24 @@ exports.getAmenitiesByProperty = async (req, res) => {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
+
+// 3. Delete Amenity (Owner Only)
+exports.deleteAmenity = async (req, res) => {
+    try {
+        if (req.user.role !== 'Owner' && req.user.role !== 'Admin' && req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Access Denied.' });
+        }
+
+        const amenity = await Amenity.findById(req.params.id).populate('property');
+        if (!amenity) return res.status(404).json({ message: 'Amenity not found.' });
+
+        if (req.user.role === 'Owner' && amenity.property.owner.toString() !== req.user.id) {
+            return res.status(403).json({ message: 'You dont own the property this amenity belongs to.' });
+        }
+
+        await Amenity.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: 'Amenity deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error: error.message });
+    }
+};
