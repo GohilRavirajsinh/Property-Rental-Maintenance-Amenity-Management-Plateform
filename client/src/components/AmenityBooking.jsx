@@ -48,7 +48,7 @@ const AmenityBooking = () => {
             if (!propertyId) return;
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:5000/api/amenities/property/${propertyId}`, {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/amenities/property/${propertyId}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setAvailableAmenities(response.data);

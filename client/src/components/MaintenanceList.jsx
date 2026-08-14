@@ -31,7 +31,7 @@ const MaintenanceList = () => {
         
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:5000/api/maintenance/${id}`, {
+            await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/maintenance/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setRequests(requests.filter(req => req._id !== id));
@@ -44,7 +44,7 @@ const MaintenanceList = () => {
     const markAsResolved = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:5000/api/maintenance/${id}/status`, 
+            await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/maintenance/${id}/status`, 
                 { status: 'Completed' },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

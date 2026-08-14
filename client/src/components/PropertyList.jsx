@@ -30,7 +30,7 @@ const PropertyList = () => {
         
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:5000/api/properties/${propertyId}`, {
+            await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/properties/${propertyId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setProperties(properties.filter(p => p._id !== propertyId));
