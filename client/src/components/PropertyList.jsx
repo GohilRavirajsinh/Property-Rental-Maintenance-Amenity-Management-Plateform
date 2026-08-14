@@ -54,8 +54,14 @@ const PropertyList = () => {
                         key={property._id} 
                         className={`bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 opacity-0 animate-fade-in-up stagger-${(index % 3) + 1}`}
                     >
-                        {/* Placeholder Image for beautiful UI */}
-                        <div className="h-40 bg-gradient-to-r from-indigo-200 to-purple-200"></div>
+                        {/* Show actual image or placeholder */}
+                        {property.imageUrl ? (
+                            <img src={property.imageUrl} alt={property.title} className="h-48 w-full object-cover" />
+                        ) : (
+                            <div className="h-48 bg-gradient-to-r from-indigo-200 to-purple-200 flex items-center justify-center">
+                                <span className="text-white font-bold opacity-50">No Image</span>
+                            </div>
+                        )}
                         
                         <div className="p-5">
                             <h4 className="font-bold text-xl text-gray-900 mb-1">{property.title}</h4>

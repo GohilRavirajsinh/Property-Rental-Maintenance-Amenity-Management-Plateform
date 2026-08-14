@@ -21,6 +21,10 @@ const propertySchema = new mongoose.Schema({
     isAvailable: {
         type: Boolean,
         require: true
+    },
+    imageUrl: {
+        type: String, // Cloudinary se aane wali image ki link yahan save hogi
+        default: null
     }
 }, { timestamps: true });
 

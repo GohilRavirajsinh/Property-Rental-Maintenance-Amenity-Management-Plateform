@@ -5,12 +5,16 @@ exports.addProperty = async (req, res) => {
     try {
         const { title, address, rentAmount } = req.body;
         
+        // Agar multer/cloudinary ne image upload ki hai, toh uska URL req.file.path me aayega
+        const imageUrl = req.file ? req.file.path : null;
+
         // Owner ID automatically comes from the Token (authMiddleware)
         const newProperty = new Property({
             title,
             address,
             rentAmount,
-            owner: req.user.id 
+            owner: req.user.id,
+            imageUrl: imageUrl
         });
 
         await newProperty.save();

@@ -5,8 +5,10 @@ const AddPropertyForm = () => {
     const [title, setTitle] = useState('');
     const [address, setAddress] = useState('');
     const [rentAmount, setRentAmount] = useState('1000');
+    const [image, setImage] = useState(null);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,14 +16,27 @@ const AddPropertyForm = () => {
         setError('');
         
         try {
+            setIsUploading(true);
             // 1. Tijori (localStorage) se token nikalna
             const token = localStorage.getItem('token');
             
-            // 2. Backend ko Request bhejna (sath me token bhi)
+            // 2. FormData banana kyunki hume file (image) bhejni hai
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('address', address);
+            formData.append('rentAmount', rentAmount);
+            if (image) {
+                formData.append('image', image);
+            }
+            
+            // 3. Backend ko Request bhejna (sath me token bhi)
             const response = await axios.post('http://localhost:5000/api/properties/add', 
-                { title, address, rentAmount },
+                formData,
                 { 
-                    headers: { Authorization: `Bearer ${token}` } // Ye humare Backend Guard ke liye hai
+                    headers: { 
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
                 } 
             );
 
@@ -32,8 +47,11 @@ const AddPropertyForm = () => {
             setTitle('');
             setAddress('');
             setRentAmount('1000');
+            setImage(null);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to add property.');
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -70,8 +88,15 @@ const AddPropertyForm = () => {
                         placeholder="15000"
                     />
                 </div>
-                <button type="submit" className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition">
-                    Submit Property
+                <div>
+                    <label className="block text-gray-700 font-semibold mb-1">Property Image</label>
+                    <input 
+                        type="file" accept="image/*" onChange={e => setImage(e.target.files[0])}
+                        className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                    />
+                </div>
+                <button type="submit" disabled={isUploading} className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition disabled:bg-indigo-400">
+                    {isUploading ? 'Uploading...' : 'Submit Property'}
                 </button>
             </form>
         </div>
