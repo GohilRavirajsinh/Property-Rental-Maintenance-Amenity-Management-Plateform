@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const PropertyList = () => {
+const PropertyList = ({ onBookAmenity }) => {
     const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -90,7 +90,7 @@ const PropertyList = () => {
             {/* Property Details Modal */}
             {selectedProperty && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={() => setSelectedProperty(null)}>
-                    <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden animate-fade-in-up relative" onClick={(e) => e.stopPropagation()}>
+                    <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-fade-in-up relative" onClick={(e) => e.stopPropagation()}>
                         <button 
                             onClick={() => setSelectedProperty(null)}
                             className="absolute top-4 right-4 bg-white/50 hover:bg-white text-gray-800 rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition backdrop-blur-md font-bold"
@@ -130,9 +130,17 @@ const PropertyList = () => {
                                 <button onClick={() => setSelectedProperty(null)} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-xl transition">
                                     Close Details
                                 </button>
-                                <button className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg transform hover:scale-[1.02]">
-                                    Contact Owner
-                                </button>
+                                {onBookAmenity && (
+                                    <button 
+                                        onClick={() => {
+                                            setSelectedProperty(null);
+                                            onBookAmenity();
+                                        }}
+                                        className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg transform hover:scale-[1.02]"
+                                    >
+                                        Book Amenity
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

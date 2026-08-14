@@ -106,7 +106,7 @@ const Dashboard = () => {
                         </div>
 
                         {/* Tab Content */}
-                        {activeTenantTab === 'properties' && <PropertyList />}
+                        {activeTenantTab === 'properties' && <PropertyList onBookAmenity={() => setActiveTenantTab('booking')} />}
                         
                         {activeTenantTab === 'booking' && <AmenityBooking />}
 
