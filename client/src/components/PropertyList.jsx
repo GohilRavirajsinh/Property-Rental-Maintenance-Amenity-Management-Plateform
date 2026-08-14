@@ -106,6 +106,12 @@ const PropertyList = ({ onBookAmenity, ownerOnly }) => {
                             <h4 className="font-bold text-xl text-gray-900 mb-1">{property.title}</h4>
                             <p className="text-gray-500 text-sm mb-3">📍 {property.address}</p>
                             
+                            {currentUser && (currentUser.role === 'Admin' || currentUser.role === 'admin') && property.owner && (
+                                <p className="text-indigo-600 text-xs font-bold mb-3 bg-indigo-50 inline-block px-2 py-1 rounded">
+                                    👤 Added by: {property.owner.name}
+                                </p>
+                            )}
+
                             <div className="flex justify-between items-center mt-4">
                                 <span className="bg-green-100 text-green-700 font-bold px-3 py-1 rounded-full text-sm">
                                     ₹{property.rentAmount} / month
