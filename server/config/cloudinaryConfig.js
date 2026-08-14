@@ -14,7 +14,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'property_management', // Cloudinary me kis folder me save karna hai
-    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp', 'heic', 'heif'],
   },
 });
 
