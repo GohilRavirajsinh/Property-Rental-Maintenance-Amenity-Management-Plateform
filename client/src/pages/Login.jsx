@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
+import Footer from '../components/Footer'
 
 const Login = () => {
     // 1. Data store karne ke liye state
@@ -36,8 +37,9 @@ const Login = () => {
 
     return (
         // Tailwind classes se ekdum Premium look banaya hai
-        <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-teal-50">
-            <div className="bg-white/80 backdrop-blur-lg p-10 rounded-3xl shadow-xl w-full max-w-md border border-white/50 opacity-0 animate-fade-in-up">
+        <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-teal-50">
+            <div className="flex-1 flex justify-center items-center p-4">
+                <div className="bg-white/80 backdrop-blur-lg p-10 rounded-3xl shadow-xl w-full max-w-md border border-white/50 opacity-0 animate-fade-in-up">
 
                 <h1 className="text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-8">
                     Welcome Back
@@ -82,7 +84,10 @@ const Login = () => {
                     Don't have an account? <Link to="/register" className="text-indigo-600 font-bold hover:underline">Sign Up</Link>
                 </p>
 
+                </div>
             </div>
+            
+            <Footer />
         </div>
     )
 }

@@ -9,6 +9,7 @@ import AddAmenityForm from '../components/AddAmenityForm'
 import ManageAmenities from '../components/ManageAmenities'
 import UserManagement from '../components/UserManagement'
 import BookingList from '../components/BookingList'
+import Footer from '../components/Footer'
 
 const Dashboard = () => {
     const [user, setUser] = useState(null)
@@ -224,6 +225,8 @@ const Dashboard = () => {
                 )}
 
             </div>
+            
+            <Footer />
         </div>
     )
 }
