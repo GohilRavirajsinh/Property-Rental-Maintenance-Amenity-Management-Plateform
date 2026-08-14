@@ -85,7 +85,7 @@ const Dashboard = () => {
                 {/* Yahan Jadoo Hoga: Role ke hisaab se UI badal jayega! */}
                 {user.role === 'Tenant' && (
 
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 opacity-0 animate-fade-in-up">
                         <h2 className="text-3xl font-extrabold text-gray-800 mb-6">Tenant Dashboard</h2>
 
                         {/* Tenant Navigation Tabs */}
@@ -121,7 +121,7 @@ const Dashboard = () => {
 
                 {user.role === 'Owner' && (
 
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 opacity-0 animate-fade-in-up">
                         <h2 className="text-3xl font-extrabold text-gray-800 mb-6">Owner Dashboard</h2>
 
                         {/* Owner Navigation Tabs */}
@@ -165,7 +165,7 @@ const Dashboard = () => {
 
                 {(user.role === 'Admin' || user.role === 'admin') && (
 
-                    <div className="p-8 rounded-2xl shadow-lg border border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50">
+                    <div className="p-8 rounded-2xl shadow-lg border border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50 opacity-0 animate-fade-in-up">
                         <h2 className="text-4xl font-extrabold text-indigo-900 mb-6">Master Admin Dashboard</h2>
 
                         {/* Admin Navigation Tabs */}

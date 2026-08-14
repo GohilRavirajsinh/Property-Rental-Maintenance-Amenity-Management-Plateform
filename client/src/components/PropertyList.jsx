@@ -49,8 +49,11 @@ const PropertyList = () => {
             <h3 className="text-2xl font-bold text-gray-800 mb-6">Available Properties</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {properties.map((property) => (
-                    <div key={property._id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition">
+                {properties.map((property, index) => (
+                    <div 
+                        key={property._id} 
+                        className={`bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 opacity-0 animate-fade-in-up stagger-${(index % 3) + 1}`}
+                    >
                         {/* Placeholder Image for beautiful UI */}
                         <div className="h-40 bg-gradient-to-r from-indigo-200 to-purple-200"></div>
                         

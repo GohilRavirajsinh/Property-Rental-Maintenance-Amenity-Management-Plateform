@@ -66,8 +66,11 @@ const MaintenanceList = () => {
                 <p className="text-gray-500 font-semibold">No maintenance requests found.</p>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {requests.map((req) => (
-                        <div key={req._id} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative">
+                    {requests.map((req, index) => (
+                        <div 
+                            key={req._id} 
+                            className={`bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative hover:shadow-xl hover:-translate-y-1 transition-all duration-300 opacity-0 animate-fade-in-up stagger-${(index % 3) + 1}`}
+                        >
                             {/* Status Badge */}
                             <span className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold ${
                                 req.status === 'Completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'

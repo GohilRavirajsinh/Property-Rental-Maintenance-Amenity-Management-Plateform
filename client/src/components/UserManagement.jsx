@@ -56,8 +56,8 @@ const UserManagement = () => {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-indigo-50">
-                        {users.map((u) => (
-                            <tr key={u._id} className="hover:bg-indigo-50/50 transition">
+                        {users.map((u, index) => (
+                            <tr key={u._id} className={`hover:bg-indigo-50/50 transition-all opacity-0 animate-fade-in-up stagger-${(index % 3) + 1}`}>
                                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{u.name}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-gray-500">{u.email}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">

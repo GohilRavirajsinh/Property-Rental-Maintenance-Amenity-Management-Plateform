@@ -45,8 +45,11 @@ const BookingList = () => {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {bookings.map(booking => (
-                <div key={booking._id} className="bg-white p-5 rounded-xl border border-indigo-100 shadow-sm hover:shadow-md transition">
+            {bookings.map((booking, index) => (
+                <div 
+                    key={booking._id} 
+                    className={`bg-white p-5 rounded-xl border border-indigo-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 opacity-0 animate-fade-in-up stagger-${(index % 3) + 1}`}
+                >
                     <div className="flex justify-between items-start mb-3">
                         <h4 className="font-bold text-lg text-indigo-900">{booking.amenity}</h4>
                         <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Confirmed</span>
