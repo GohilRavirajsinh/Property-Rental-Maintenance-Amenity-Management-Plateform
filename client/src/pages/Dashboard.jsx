@@ -91,7 +91,7 @@ const Dashboard = () => {
                         <h2 className="text-3xl font-extrabold text-gray-800 mb-6">Tenant Dashboard</h2>
 
                         {/* Tenant Navigation Tabs */}
-                        <div className="flex space-x-4 border-b border-gray-200 mb-6 pb-2 overflow-x-auto">
+                        <div className="flex space-x-4 border-b border-gray-200 mb-6 pb-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
                             <button 
                                 onClick={() => setActiveTenantTab('properties')}
                                 className={`font-bold px-4 py-2 rounded-t-lg transition ${activeTenantTab === 'properties' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
@@ -127,7 +127,7 @@ const Dashboard = () => {
                         <h2 className="text-3xl font-extrabold text-gray-800 mb-6">Owner Dashboard</h2>
 
                         {/* Owner Navigation Tabs */}
-                        <div className="flex space-x-4 border-b border-gray-200 mb-6 pb-2 overflow-x-auto">
+                        <div className="flex space-x-4 border-b border-gray-200 mb-6 pb-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
                             <button 
                                 onClick={() => setActiveOwnerTab('manage_assets')}
                                 className={`font-bold px-4 py-2 rounded-t-lg transition ${activeOwnerTab === 'manage_assets' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
@@ -176,7 +176,7 @@ const Dashboard = () => {
                         <h2 className="text-4xl font-extrabold text-indigo-900 mb-6">Master Admin Dashboard</h2>
 
                         {/* Admin Navigation Tabs */}
-                        <div className="flex space-x-4 border-b border-indigo-200 mb-6 pb-2 overflow-x-auto">
+                        <div className="flex space-x-4 border-b border-indigo-200 mb-6 pb-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
                             <button 
                                 onClick={() => setActiveAdminTab('users')}
                                 className={`font-bold px-4 py-2 rounded-t-lg transition ${activeAdminTab === 'users' ? 'text-indigo-800 border-b-2 border-indigo-800' : 'text-indigo-400 hover:text-indigo-600'}`}
