@@ -1,24 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const About = () => {
     const navigate = useNavigate();
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
-            {/* Top Navbar */}
-            <nav className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
-                <div className="p-4 flex justify-between items-center max-w-7xl mx-auto w-full">
-                    <h1 className="text-xl font-bold cursor-pointer" onClick={() => navigate('/')}>🏢 Property Platform</h1>
-                    <button
-                        onClick={() => navigate('/')}
-                        className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg font-bold shadow-sm transition"
-                    >
-                        Back to Home
-                    </button>
-                </div>
-            </nav>
+            <Navbar />
 
             <div className="flex-1 max-w-4xl mx-auto p-6 md:p-10 w-full animate-fade-in-up">
                 <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100">

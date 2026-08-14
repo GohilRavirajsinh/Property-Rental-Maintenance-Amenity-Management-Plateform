@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import Footer from '../components/Footer'
+import Navbar from '../components/Navbar'
 
 const Register = () => {
     const [name, setName] = useState('')
@@ -37,6 +38,7 @@ const Register = () => {
 
     return (
         <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-teal-50">
+            <Navbar />
             <div className="flex-1 flex justify-center items-center p-4">
                 <div className="bg-white/80 backdrop-blur-lg p-10 rounded-3xl shadow-xl w-full max-w-md border border-white/50 opacity-0 animate-fade-in-up">
 
