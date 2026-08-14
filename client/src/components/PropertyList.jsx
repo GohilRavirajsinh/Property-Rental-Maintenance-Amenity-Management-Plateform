@@ -21,7 +21,8 @@ const PropertyList = ({ onBookAmenity, ownerOnly }) => {
             const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/properties/all`);
             let fetchedProperties = response.data;
             if (ownerOnly && currentUser) {
-                fetchedProperties = fetchedProperties.filter(p => p.owner?._id === currentUser._id);
+                const currentUserId = currentUser.id || currentUser._id;
+                fetchedProperties = fetchedProperties.filter(p => p.owner?._id === currentUserId);
             }
             setProperties(fetchedProperties);
             setLoading(false);
@@ -117,7 +118,7 @@ const PropertyList = ({ onBookAmenity, ownerOnly }) => {
                                     ₹{property.rentAmount} / month
                                 </span>
                                 
-                                {currentUser && (currentUser.role === 'Admin' || currentUser.role === 'admin' || currentUser._id === property.owner?._id) && (
+                                {currentUser && (currentUser.role === 'Admin' || currentUser.role === 'admin' || (currentUser.id || currentUser._id) === property.owner?._id) && (
                                     <div className="flex space-x-2">
                                         <button 
                                             onClick={(e) => handleEditClick(property, e)}
