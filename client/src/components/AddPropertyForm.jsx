@@ -5,6 +5,7 @@ const AddPropertyForm = () => {
     const [title, setTitle] = useState('');
     const [address, setAddress] = useState('');
     const [rentAmount, setRentAmount] = useState('1000');
+    const [amenities, setAmenities] = useState('');
     const [image, setImage] = useState(null);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -25,6 +26,9 @@ const AddPropertyForm = () => {
             formData.append('title', title);
             formData.append('address', address);
             formData.append('rentAmount', rentAmount);
+            if (amenities) {
+                formData.append('amenities', amenities);
+            }
             if (image) {
                 formData.append('image', image);
             }
@@ -47,6 +51,7 @@ const AddPropertyForm = () => {
             setTitle('');
             setAddress('');
             setRentAmount('1000');
+            setAmenities('');
             setImage(null);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to add property.');
@@ -86,6 +91,14 @@ const AddPropertyForm = () => {
                         min="1000"
                         className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
                         placeholder="15000"
+                    />
+                </div>
+                <div>
+                    <label className="block text-gray-700 font-semibold mb-1">Amenities (Comma separated)</label>
+                    <input 
+                        type="text" value={amenities} onChange={e => setAmenities(e.target.value)}
+                        className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
+                        placeholder="e.g. Gym, Swimming Pool, Parking"
                     />
                 </div>
                 <div>

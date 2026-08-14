@@ -136,10 +136,6 @@ const Dashboard = () => {
                                 className={`font-bold px-4 py-2 rounded-t-lg transition ${activeOwnerTab === 'add_property' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
                             >Add Property</button>
                             <button 
-                                onClick={() => setActiveOwnerTab('add_amenity')}
-                                className={`font-bold px-4 py-2 rounded-t-lg transition ${activeOwnerTab === 'add_amenity' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
-                            >Add Amenity</button>
-                            <button 
                                 onClick={() => setActiveOwnerTab('maintenance')}
                                 className={`font-bold px-4 py-2 rounded-t-lg transition ${activeOwnerTab === 'maintenance' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
                             >Maintenance Requests</button>
@@ -152,13 +148,11 @@ const Dashboard = () => {
                         {/* Tab Content */}
                         {activeOwnerTab === 'manage_assets' && (
                             <div className="pt-2">
-                                <h3 className="text-2xl font-bold text-indigo-900 mb-4">My Properties</h3>
-                                <PropertyList />
+                                <PropertyList ownerOnly={true} />
                                 <ManageAmenities />
                             </div>
                         )}
                         {activeOwnerTab === 'add_property' && <AddPropertyForm />}
-                        {activeOwnerTab === 'add_amenity' && <div className="pt-2"><AddAmenityForm /></div>}
                         
                         {activeOwnerTab === 'maintenance' && (
                             <div className="pt-2">

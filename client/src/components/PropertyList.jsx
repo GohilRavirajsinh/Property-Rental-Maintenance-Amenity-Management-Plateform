@@ -1,30 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const PropertyList = ({ onBookAmenity }) => {
+const PropertyList = ({ onBookAmenity, ownerOnly }) => {
     const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [selectedProperty, setSelectedProperty] = useState(null);
+    const [editingProperty, setEditingProperty] = useState(null);
+    
+    // Edit Form States
+    const [editTitle, setEditTitle] = useState('');
+    const [editAddress, setEditAddress] = useState('');
+    const [editRent, setEditRent] = useState('');
+    const [isUpdating, setIsUpdating] = useState(false);
+
+    const currentUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+
+    const fetchProperties = async () => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/properties/all`);
+            let fetchedProperties = response.data;
+            if (ownerOnly && currentUser) {
+                fetchedProperties = fetchedProperties.filter(p => p.owner?._id === currentUser._id);
+            }
+            setProperties(fetchedProperties);
+            setLoading(false);
+        } catch (err) {
+            setError('Failed to load properties');
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchProperties = async () => {
-            try {
-                // Backend se sari properties manga rahe hain
-                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/properties/all`);
-                setProperties(response.data);
-                setLoading(false);
-            } catch (err) {
-                setError('Failed to load properties');
-                setLoading(false);
-            }
-        };
-
         fetchProperties();
-    }, []);
-
-    // Get current user to show delete button for Admin/Owner
-    const currentUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+    }, [ownerOnly]);
 
     const handleDeleteProperty = async (propertyId) => {
         if (!window.confirm("Are you sure you want to delete this property?")) return;
@@ -41,13 +50,42 @@ const PropertyList = ({ onBookAmenity }) => {
         }
     };
 
+    const handleEditClick = (property, e) => {
+        e.stopPropagation();
+        setEditTitle(property.title);
+        setEditAddress(property.address);
+        setEditRent(property.rentAmount);
+        setEditingProperty(property);
+    };
+
+    const handleUpdateProperty = async (e) => {
+        e.preventDefault();
+        try {
+            setIsUpdating(true);
+            const token = localStorage.getItem('token');
+            const response = await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/properties/${editingProperty._id}`, 
+                { title: editTitle, address: editAddress, rentAmount: editRent },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            
+            // Update local state
+            setProperties(properties.map(p => p._id === editingProperty._id ? response.data.property : p));
+            setEditingProperty(null);
+        } catch (err) {
+            console.error("Failed to update property", err);
+            alert(err.response?.data?.message || "Failed to update property");
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
     if (loading) return <p className="text-gray-500 font-semibold mt-4">Loading properties...</p>;
     if (error) return <p className="text-red-500 font-semibold mt-4">{error}</p>;
     if (properties.length === 0) return <p className="text-gray-500 font-semibold mt-4">No properties available right now.</p>;
 
     return (
         <div className="mt-6">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Available Properties</h3>
+            <h3 className="text-2xl font-bold text-gray-800 mb-6">{ownerOnly ? 'My Properties' : 'Available Properties'}</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {properties.map((property, index) => (
@@ -56,7 +94,6 @@ const PropertyList = ({ onBookAmenity }) => {
                         onClick={() => setSelectedProperty(property)}
                         className={`bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer opacity-0 animate-fade-in-up stagger-${(index % 3) + 1}`}
                     >
-                        {/* Show actual image or placeholder */}
                         {property.imageUrl ? (
                             <img src={property.imageUrl} alt={property.title} className="h-48 w-full object-cover" />
                         ) : (
@@ -73,13 +110,22 @@ const PropertyList = ({ onBookAmenity }) => {
                                 <span className="bg-green-100 text-green-700 font-bold px-3 py-1 rounded-full text-sm">
                                     ₹{property.rentAmount} / month
                                 </span>
+                                
                                 {currentUser && (currentUser.role === 'Admin' || currentUser.role === 'admin' || currentUser._id === property.owner?._id) && (
-                                    <button 
-                                        onClick={(e) => { e.stopPropagation(); handleDeleteProperty(property._id); }}
-                                        className="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1 rounded-md text-sm font-bold transition"
-                                    >
-                                        Delete
-                                    </button>
+                                    <div className="flex space-x-2">
+                                        <button 
+                                            onClick={(e) => handleEditClick(property, e)}
+                                            className="text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-3 py-1 rounded-md text-sm font-bold transition"
+                                        >
+                                            Edit
+                                        </button>
+                                        <button 
+                                            onClick={(e) => { e.stopPropagation(); handleDeleteProperty(property._id); }}
+                                            className="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1 rounded-md text-sm font-bold transition"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                         </div>
@@ -143,6 +189,46 @@ const PropertyList = ({ onBookAmenity }) => {
                                 )}
                             </div>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Edit Property Modal */}
+            {editingProperty && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={() => setEditingProperty(null)}>
+                    <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 animate-fade-in-up relative" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="text-2xl font-bold text-gray-800 mb-4">Edit Property</h3>
+                        <form onSubmit={handleUpdateProperty} className="space-y-4">
+                            <div>
+                                <label className="block text-gray-700 font-semibold mb-1">Title</label>
+                                <input 
+                                    type="text" required value={editTitle} onChange={e => setEditTitle(e.target.value)}
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 font-semibold mb-1">Address</label>
+                                <input 
+                                    type="text" required value={editAddress} onChange={e => setEditAddress(e.target.value)}
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 font-semibold mb-1">Rent Amount (₹)</label>
+                                <input 
+                                    type="number" required value={editRent} onChange={e => setEditRent(e.target.value)}
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                />
+                            </div>
+                            <div className="flex gap-4 mt-6">
+                                <button type="button" onClick={() => setEditingProperty(null)} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2 rounded-xl transition">
+                                    Cancel
+                                </button>
+                                <button type="submit" disabled={isUpdating} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 rounded-xl transition disabled:bg-indigo-400">
+                                    {isUpdating ? 'Updating...' : 'Update Property'}
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             )}
