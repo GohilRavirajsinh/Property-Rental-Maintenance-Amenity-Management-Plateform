@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
@@ -14,7 +14,7 @@ const Navbar = () => {
         <nav className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg sticky top-0 z-50">
             <div className="p-4 flex justify-between items-center max-w-7xl mx-auto w-full">
                 <h1 className="text-xl font-bold cursor-pointer" onClick={() => navigate('/')}>
-                    ?? Property Platform
+                    🏢 Property Platform
                 </h1>
                 <div className="flex space-x-3 items-center">
                     <button
@@ -68,3 +68,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
